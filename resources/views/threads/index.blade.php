@@ -34,6 +34,9 @@
             @csrf
             @method('PUT')
 
+            <a href="#" onclick="event.preventDefault(); document.getElementById('editForm-{{ $thread->id }}').style.display = 'block';">Edit</a>
+            <div id="editForm-{{ $thread->id }}" style="display: none;">
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" name="title" value="{{ $thread->title }}">
@@ -45,6 +48,7 @@
             <button type="submit">Update Thread</button>
         </form>
     </div>
+</div>
 @endforeach
     </div>
 @endsection
