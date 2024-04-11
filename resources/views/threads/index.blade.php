@@ -22,32 +22,34 @@
     </form>
 
     @foreach ($threads as $thread)
-    <div class="bg-white p-4 rounded shadow mb-4">
-        <div class="border-b border-gray-200 mb-2 pb-2">
-            <h2 class="text-xl font-bold">{{ $thread->title }}</h2>
-            <p class="text-gray-600 text-sm">Posted by {{ $thread->user->name }} on {{ $thread->created_at->format('M d, Y') }}</p>
-        </div>
-        <p>{{ $thread->body }}</p>
-
-        <!-- Form to update the current thread -->
-        <form method="POST" action="/threads/{{ $thread->id }}">
-            @csrf
-            @method('PUT')
-
-            <a href="#" onclick="event.preventDefault(); document.getElementById('editForm-{{ $thread->id }}').style.display = 'block';">Edit</a>
-            <div id="editForm-{{ $thread->id }}" style="display: none;">
-
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" name="title" value="{{ $thread->title }}">
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="body">Body</label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="body" name="body">{{ $thread->body }}</textarea>
-            </div>
-            <button type="submit">Update Thread</button>
-        </form>
+<div class="bg-white p-4 rounded shadow mb-4">
+    <div class="border-b border-gray-200 mb-2 pb-2">
+        <h2 class="text-xl font-bold">{{ $thread->title }}</h2>
+        <p class="text-gray-600 text-sm">Posted by {{ $thread->user->name }} on {{ $thread->created_at->format('M d, Y') }}</p>
     </div>
+    <p>{{ $thread->body }}</p>
+
+    <!-- Form to update the current thread -->
+    @if (auth()->id() == $thread->user_id)
+    <form method="POST" action="/threads/{{ $thread->id }}">
+        @csrf
+        @method('PUT')
+
+        <a href="#" onclick="event.preventDefault(); document.getElementById('editForm-{{ $thread->id }}').style.display = 'block';">Edit</a>
+        <div id="editForm-{{ $thread->id }}" style="display: none;">
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" name="title" value="{{ $thread->title }}">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="body">Body</label>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="body" name="body">{{ $thread->body }}</textarea>
+        </div>
+        <button type="submit">Update Thread</button>
+        </div>
+    </form>
+    @endif
 </div>
 @endforeach
     </div>
