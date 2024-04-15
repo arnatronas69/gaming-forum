@@ -16,6 +16,10 @@ class ThreadController extends Controller
 
 public function store(Request $request)
 {
+    $request->validate([
+        'title' => 'required|max:200', // Limit the title to 200 characters
+        'body' => 'required|max:5000', // Limit the body to 5000 characters
+    ]);
     $thread = new Thread;
     $thread->title = $request->title;
     $thread->body = $request->body;
@@ -27,6 +31,11 @@ public function store(Request $request)
 
 public function update(Request $request, $id)
 {
+    $request->validate([
+        'title' => 'required|max:200', // Limit the title to 200 characters
+        'body' => 'required|max:5000', // Limit the body to 5000 characters
+    ]);
+
     $thread = Thread::findOrFail($id);
 
     // Check if the authenticated user is the author of the thread
