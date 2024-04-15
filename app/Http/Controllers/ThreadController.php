@@ -28,6 +28,12 @@ public function store(Request $request)
 public function update(Request $request, $id)
 {
     $thread = Thread::findOrFail($id);
+
+    // Check if the authenticated user is the author of the thread
+    if ($request->user()->cannot('update', $thread)) {
+        return response()->json(['error' => 'You can only edit your own posts.'], 403);
+    }
+
     $thread->title = $request->title;
     $thread->body = $request->body;
     $thread->save();
