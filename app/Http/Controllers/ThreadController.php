@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Thread;
+use App\Models\Category;
 
 class ThreadController extends Controller
 {
     public function index()
 {
-    $threads = Thread::all();
-    return view('threads.index', compact('threads'));
-    
+    $categories = Category::all();
+    return view('threads.index', compact('categories'));
 }
 
 public function store(Request $request)
@@ -48,5 +48,11 @@ public function update(Request $request, $id)
     $thread->save();
 
     return redirect('/threads');
+}
+
+public function categories()
+{
+    $categories = Category::all();
+    return view('threads.categories', compact('categories'));
 }
 }
