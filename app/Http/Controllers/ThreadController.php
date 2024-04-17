@@ -14,7 +14,7 @@ class ThreadController extends Controller
     return view('threads.index', compact('categories'));
 }
 
-public function store(Request $request)
+public function store(Request $request, Category $category)
 {
     $request->validate([
         'title' => 'required|max:200', // Limit the title to 200 characters
@@ -24,9 +24,10 @@ public function store(Request $request)
     $thread->title = $request->title;
     $thread->body = $request->body;
     $thread->user_id = auth()->id(); // Set the user_id to the ID of the currently authenticated user
+    $thread->category_id = $category->id;
     $thread->save();
 
-    return redirect('/threads');
+    return redirect()->back();
 }
 
 public function update(Request $request, $id)
@@ -47,7 +48,7 @@ public function update(Request $request, $id)
     $thread->body = $request->body;
     $thread->save();
 
-    return redirect('/threads');
+    return redirect()->back();
 }
 
 public function categories()

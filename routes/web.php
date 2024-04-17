@@ -9,9 +9,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/threads', [ThreadController::class, 'store']);
+Route::post('/categories/{category}/threads', [ThreadController::class, 'store']);
 
-Route::get('/categories', [ThreadController::class, 'categories']);
+Route::get('/categories', [CategoriesController::class, 'index']);
 Route::get('/categories/{category}', [CategoriesController::class, 'show']);
 
 Route::resource('threads', ThreadController::class);
