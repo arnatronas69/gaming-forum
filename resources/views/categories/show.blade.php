@@ -13,8 +13,7 @@
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="body">Body</label>
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="body" name="body" onkeyup="updateCount(this, 5000)"></textarea>
-            <span id="body-count">0/5000</span>
+            <textarea id="body" name="body"></textarea>
         </div>
         <div class="flex items-center justify-between">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
@@ -26,8 +25,8 @@
     @foreach ($threads as $thread)
     <div class="bg-white p-4 rounded shadow mb-4">
         <h2 class="text-xl font-bold">{{ $thread->title }}</h2>
-        <p>{{ $thread->body }}</p>
         <p>Posted by: {{ $thread->user->name }} at {{ $thread->created_at }}</p>
+        <div>{!! \Parsedown::instance()->text($thread->body) !!}</div>
         @if (auth()->id() == $thread->user_id)
             <form method="POST" action="/threads/{{ $thread->id }}">
                 @csrf
@@ -41,19 +40,32 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="body">Body</label>
-                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="body-{{ $thread->id }}" name="body" onkeyup="updateCount(this, 5000)">{{ $thread->body }}</textarea>
-                        <span id="body-{{ $thread->id }}-count">{{ strlen($thread->body) }}/5000</span>
+                        <textarea id="body-{{ $thread->id }}" name="body">{{ $thread->body }}</textarea>
                     </div>
                     <button type="submit">Update Thread</button>
                 </div>
             </form>
         @endif
     </div>
+@endforeach
+    
+    {{ $threads->links() }}
+    </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+    var bodyElement = document.getElementById("body");
+    if (bodyElement) {
+        var simplemde1 = new SimpleMDE({ element: bodyElement });
+    }
+
+    @foreach ($threads as $thread)
+        var bodyThreadElement = document.getElementById("body-{{ $thread->id }}");
+        if (bodyThreadElement) {
+            var simplemde2 = new SimpleMDE({ element: bodyThreadElement });
+        }
     @endforeach
 
-    {{ $threads->links() }}
-</div>
-<script>
     function updateCount(element, limit) {
         var count = element.value.length;
         document.getElementById(element.id + '-count').textContent = count + '/' + limit;
