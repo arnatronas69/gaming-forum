@@ -72,3 +72,4 @@
     }
 </script>
 @endsection
+@TODO: XSS protection, make editor show only markdown, add delete thread functionality(?)
