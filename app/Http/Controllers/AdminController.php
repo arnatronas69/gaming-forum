@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Thread;
+use Parsedown;
 
 class AdminController extends Controller
 {
@@ -68,6 +69,26 @@ class AdminController extends Controller
         // Delete the thread
         $thread->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Thread deleted successfully');
+        return redirect()->route('admin')->with('success', 'Thread deleted successfully');
+    }
+
+    public function adminUpdate(Request $request, Thread $thread)
+    {
+        $request->validate([
+            'title' => 'required|max:200', // Limit the title to 200 characters
+            'body' => 'required|max:5000', // Limit the body to 5000 characters
+        ]);
+    
+        // Check if the authenticated user is an admin
+        if (!$request->user()->is_admin) {
+            return response()->json(['error' => 'Only admins can edit posts.'], 403);
+        }
+    
+        $thread->update([
+            'title' => $request->title,
+            'body' => Parsedown::instance()->text($request->body),
+        ]);
+    
+        return redirect()->route('admin');
     }
 }

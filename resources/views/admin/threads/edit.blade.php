@@ -14,8 +14,8 @@
         </div>
 
         <div class="mb-4">
-            <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
-            <textarea id="content" name="content" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('content', $thread->content) }}</textarea>
+            <label for="body" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
+            <textarea id="body" name="body" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('body', $thread->body) }}</textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Update Thread</button>

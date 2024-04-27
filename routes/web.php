@@ -18,9 +18,9 @@ Route::get('/categories/{category}', [CategoriesController::class, 'show']);
 Route::resource('threads', ThreadController::class);
 Route::resource('threads.posts', PostController::class);
 
-Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::get('/admin/threads/{thread}/edit', [AdminController::class, 'editThread'])->name('admin.threads.edit');
-Route::put('/admin/threads/{thread}', [AdminController::class, 'updateThread'])->name('admin.threads.update');
+Route::put('/admin/threads/{thread}', [AdminController::class, 'adminUpdate'])->name('admin.threads.update');
 Route::delete('/admin/threads/{thread}', [AdminController::class, 'deleteThread'])->name('admin.threads.delete');
 
 // User routes

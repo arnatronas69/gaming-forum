@@ -31,26 +31,24 @@ class ThreadController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'title' => 'required|max:200', // Limit the title to 200 characters
-            'body' => 'required|max:5000', // Limit the body to 5000 characters
-        ]);
+    public function update(Request $request, Thread $thread)
+{
+    $request->validate([
+        'title' => 'required|max:200', // Limit the title to 200 characters
+        'body' => 'required|max:5000', // Limit the body to 5000 characters
+    ]);
 
-        $thread = Thread::findOrFail($id);
-
-        // Check if the authenticated user is the author of the thread
-        if ($request->user()->cannot('update', $thread)) {
-            return response()->json(['error' => 'You can only edit your own posts.'], 403);
-        }
-
-        $thread->title = $request->title;
-        $thread->body = Parsedown::instance()->text($request->body);
-        $thread->save();
-
-        return redirect()->back();
+    // Check if the authenticated user is the author of the thread or an admin
+    if ($request->user()->cannot('update', $thread) && !$request->user()->is_admin) {
+        return response()->json(['error' => 'You can only edit your own posts.'], 403);
     }
+
+    $thread->title = $request->title;
+    $thread->body = Parsedown::instance()->text($request->body);
+    $thread->save();
+
+    return redirect()->back();
+}
 
     public function categories()
     {
