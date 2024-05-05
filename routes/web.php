@@ -6,6 +6,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,9 @@ Route::get('/categories/{category}', [CategoriesController::class, 'show']);
 
 Route::resource('threads', ThreadController::class);
 Route::resource('threads.posts', PostController::class);
+
+Route::get('/user/profile/picture', [ProfileController::class, 'showUploadForm'])->name('user.profile.picture');
+Route::post('/user/profile/picture', [ProfileController::class, 'storePicture'])->name('user.profile.picture.store');
 
 Route::middleware([AdminMiddleware::class])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');

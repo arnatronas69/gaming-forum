@@ -25,7 +25,8 @@
     @foreach ($threads as $thread)
     <div class="bg-white p-4 rounded shadow mb-4">
         <h2 class="text-xl font-bold">{{ $thread->title }}</h2>
-        <p>Posted by: {{ $thread->user->name }} at {{ $thread->created_at }}</p>
+        <p>Posted by: <img src="{{ asset('images/' . $thread->user->profile_picture) }}" alt="{{ $thread->user->name }}'s profile picture" style="width: 40px; height: 40px;">
+            {{ $thread->user->name }} at {{ $thread->created_at }}</p>
         <div>{!! \Parsedown::instance()->text($thread->body) !!}</div>
         @if (auth()->id() == $thread->user_id)
             <form method="POST" action="/threads/{{ $thread->id }}">

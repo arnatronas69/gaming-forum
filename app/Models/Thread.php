@@ -24,6 +24,13 @@ public function user()
 {
     return $this->belongsTo('App\Category');
 }
+
+public function setPhotoAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['photo'] = $value->store('thread_photos', 'public');
+        }
+    }
 }
 
 
