@@ -7,6 +7,11 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
+    public function showProfile()
+{
+    return view('profile.show', ['user' => auth()->user()]);
+}
+
     public function showUploadForm()
     {
         return view('profile.picture');
