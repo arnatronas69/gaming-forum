@@ -38,7 +38,6 @@
         @foreach($users as $user)
         <h2 class="text-2xl mt-4 mb-4">Threads by {{ $user->name }}</h2>
         <table class="text-left w-full border-collapse">
-            <!-- Assuming you have similar columns for threads -->
             <thead>
                 <tr>
                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Thread ID</th>
