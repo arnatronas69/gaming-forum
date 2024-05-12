@@ -23,6 +23,8 @@ Route::resource('threads.posts', PostController::class);
 Route::get('/user/profile', [ProfileController::class, 'showProfile'])->name('profile.show');
 Route::get('/user/profile/picture', [ProfileController::class, 'showUploadForm'])->name('user.profile.picture');
 Route::post('/user/profile/picture', [ProfileController::class, 'storePicture'])->name('user.profile.picture.store');
+Route::put('/user/profile/bbcode', [ProfileController::class, 'updateBBCode'])->name('profile.bbcode');
+Route::get('/user/profile/bbcode', [ProfileController::class, 'showBBCodeForm'])->name('profile.bbcode.show');
 
 Route::middleware([AdminMiddleware::class])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');

@@ -32,5 +32,23 @@ class ProfileController extends Controller
 
         return redirect()->route('user.profile.picture')->with('success','Profile picture uploaded successfully.');
     }
+
+    public function showBBCodeForm()
+    {
+        return view('profile.bbcode');
+    }
+
+    public function updateBBCode(Request $request)
+    {
+        $request->validate([
+            'bbcode' => 'required|max:255',
+        ]);
+
+        $user = auth()->user();
+        $user->bbcode = $request->bbcode;
+        $user->save();
+
+        return back()->with('status', 'BBCode updated!');
+    }
 }
 

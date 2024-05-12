@@ -47,11 +47,17 @@
                 </div>
             </form>
         @endif
+
+        <!-- Display the user's BBCode -->
+        <div class="mt-4 p-4 bg-gray-100 rounded">
+            <p>{!! $thread->user->bbcode !!}</p>
+        </div>
     </div>
-@endforeach
-    
+    @endforeach
+
     {{ $threads->links() }}
-    </div>
+</div>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script>
@@ -73,4 +79,3 @@
     }
 </script>
 @endsection
-@TODO: XSS protection, make editor show only markdown, add delete thread functionality(?)
