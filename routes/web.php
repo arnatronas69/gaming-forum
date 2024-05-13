@@ -7,6 +7,8 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MessagesController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +27,13 @@ Route::get('/user/profile/picture', [ProfileController::class, 'showUploadForm']
 Route::post('/user/profile/picture', [ProfileController::class, 'storePicture'])->name('user.profile.picture.store');
 Route::put('/user/profile/bbcode', [ProfileController::class, 'updateBBCode'])->name('profile.bbcode');
 Route::get('/user/profile/bbcode', [ProfileController::class, 'showBBCodeForm'])->name('profile.bbcode.show');
+
+Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
+Route::get('/messages/create', [MessagesController::class, 'create'])->name('messages.create');
+Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
+Route::post('/messages/{message}/reply', [MessagesController::class, 'storeReply'])->name('messages.reply.store');
+Route::get('/messages/{message}/reply', [MessagesController::class, 'reply'])->name('messages.reply');
+Route::delete('/messages/{message}', [MessagesController::class, 'destroy'])->name('messages.destroy');
 
 Route::middleware([AdminMiddleware::class])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
