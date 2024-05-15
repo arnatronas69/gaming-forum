@@ -4,6 +4,10 @@
     <div class="container mx-auto px-4">
         <h1 class="text-2xl font-bold mb-4">Received messages</h1>
 
+        <div class="mb-4">
+            <a href="{{ route('messages.create') }}" class="bg-green-500 text-black rounded px-4 py-2">Create a new Message</a>
+        </div>
+
         @foreach ($messages as $message)
             <div class="bg-white shadow rounded-lg p-6 mb-4">
                 <h2 class="text-xl font-bold mb-2">{{ $message->title }}</h2>
