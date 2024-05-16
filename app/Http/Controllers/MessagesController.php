@@ -10,9 +10,10 @@ class MessagesController extends Controller
 {
     public function index()
     {
-        $messages = Message::where('to_id', auth()->id())->get();
-
-        return view('messages.index', compact('messages'));
+        $receivedMessages = Message::where('to_id', auth()->id())->get();
+        $sentMessages = Message::where('from_id', auth()->id())->get();
+    
+        return view('messages.index', compact('receivedMessages', 'sentMessages'));
     }
 
     public function create()
@@ -26,8 +27,8 @@ class MessagesController extends Controller
     {
         $request->validate([
             'to_id' => 'required',
-            'title' => 'required',
-            'content' => 'required',
+            'title' => 'required|max:100',
+            'content' => 'required|max:1500',
         ]);
 
         $message = new Message($request->all());
@@ -40,7 +41,7 @@ class MessagesController extends Controller
     public function storeReply(Request $request, Message $message)
     {
         $request->validate([
-            'content' => 'required',
+            'content' => 'required|max:1500',
         ]);
 
         $reply = new Message;
