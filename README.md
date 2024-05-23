@@ -4,6 +4,7 @@
 - Composer
 - Laravel
 - MySQL
+- XAMPP (optional)
 - Git (optional)
 
 ## Steps to launch the project
@@ -29,7 +30,9 @@
 7. **Run the database migrations**
 - php artisan migrate
 
-8. **Start the development server**
+8. **Start up the Apache and MySQL server in XAMPP (optional)**
+
+9. **Start the development server**
 - php artisan serve
 
 ## Additonal notes
