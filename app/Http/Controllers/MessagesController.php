@@ -10,9 +10,9 @@ class MessagesController extends Controller
 {
     public function index()
     {
-        $receivedMessages = Message::where('to_id', auth()->id())->get();
-        $sentMessages = Message::where('from_id', auth()->id())->get();
-    
+        $receivedMessages = Message::where('to_id', auth()->id())->paginate(10);
+        $sentMessages = Message::where('from_id', auth()->id())->paginate(10);
+
         return view('messages.index', compact('receivedMessages', 'sentMessages'));
     }
 

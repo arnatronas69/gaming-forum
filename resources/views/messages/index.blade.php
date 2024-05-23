@@ -27,6 +27,7 @@
                     </div>
                 </div>
             @endforeach
+            {{ $receivedMessages->links() }}
         </div>
 
         <div id="sentMessages" style="display: none;">
@@ -40,6 +41,7 @@
                     <p class="text-gray-500 text-sm">Sent at: {{ $message->created_at->format('d M Y, H:i') }}</p>
                 </div>
             @endforeach
+            {{ $sentMessages->links() }}
         </div>
     </div>
 
